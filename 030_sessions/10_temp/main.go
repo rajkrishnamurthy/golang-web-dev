@@ -83,7 +83,7 @@ func signup(w http.ResponseWriter, req *http.Request) {
 			return
 		}
 		// create session
-		sID := uuid.NewV4()
+		sID, _ := uuid.NewV4()
 		c := &http.Cookie{
 			Name:  "session",
 			Value: sID.String(),
@@ -130,7 +130,7 @@ func login(w http.ResponseWriter, req *http.Request) {
 			return
 		}
 		// create session
-		sID := uuid.NewV4()
+		sID, _ := uuid.NewV4()
 		c := &http.Cookie{
 			Name:  "session",
 			Value: sID.String(),
@@ -166,7 +166,7 @@ func logout(w http.ResponseWriter, req *http.Request) {
 }
 
 func authorized(h http.HandlerFunc) http.HandlerFunc {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request){
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		// code before
 		if !alreadyLoggedIn(w, r) {
 			http.Redirect(w, r, "/", http.StatusSeeOther)
